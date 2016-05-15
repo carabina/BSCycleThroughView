@@ -1,5 +1,5 @@
 //
-//  BSCyclePlayCollectionCell.swift
+//  BSCycleImagesCollectionCell.swift
 //  VehicleGroup
 //
 //  Created by 张亚东 on 16/5/4.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class BSCyclePlayCollectionCell: UICollectionViewCell {
+class BSCycleImagesCollectionCell: UICollectionViewCell {
     
-    var cyclePlayImage: UIImage! {
+    var cycleImage: UIImage! {
         didSet {
-            imgView.image = cyclePlayImage
+            imgView.image = cycleImage
         }
     }
     
@@ -24,16 +24,20 @@ class BSCyclePlayCollectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        imgView.frame = bounds
+    }
 }
 
-extension BSCyclePlayCollectionCell {
+extension BSCycleImagesCollectionCell {
     
     func setup() {
         addSubview(imgView)
