@@ -30,6 +30,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eap-WK-09l" id="CWG-f9-xgS">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -48,10 +49,10 @@
                                 <exclude reference="uln-4q-6qY"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="jt0-Fl-TF3"/>
                                 <exclude reference="UsU-sp-9lm"/>
                                 <exclude reference="fhG-Wm-oJX"/>
                                 <exclude reference="mwD-St-6f8"/>
-                                <exclude reference="jt0-Fl-TF3"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -59,10 +60,10 @@
                                 <include reference="uln-4q-6qY"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="jt0-Fl-TF3"/>
                                 <include reference="UsU-sp-9lm"/>
                                 <include reference="fhG-Wm-oJX"/>
                                 <include reference="mwD-St-6f8"/>
-                                <include reference="jt0-Fl-TF3"/>
                             </mask>
                         </variation>
                     </view>
