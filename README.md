@@ -6,7 +6,10 @@
 
 ## Installation
 
-> pod 'BSCycleImagesView', '~> 0.0.1'
+> use_frameworks!
+
+> pod 'BSCycleImagesView'
+
 
 ## Usage
 
