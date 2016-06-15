@@ -29,13 +29,21 @@ class ViewController: UIViewController {
         }
         
         //set local images
-        cycleImagesView.images = images
+//        cycleImagesView.images = images
         
         //set image urls
-//        cycleImagesView.imageURLs = ["http://img4.duitang.com/uploads/item/201403/31/20140331094819_dayKx.jpeg",
-//        "http://i1.17173cdn.com/9ih5jd/YWxqaGBf/forum/images/2014/08/05/201143hmymxmizwmqi86yi.jpg",
-//        "http://p1.image.hiapk.com/uploads/allimg/150413/7730-150413103526-51.jpg",
-//        "http://s9.knowsky.com/bizhi/l/55001-65000/2009529123133602476178.jpg"]
+        cycleImagesView.imageURLs = ["http://img4.duitang.com/uploads/item/201403/31/20140331094819_dayKx.jpeg",
+        "http://i1.17173cdn.com/9ih5jd/YWxqaGBf/forum/images/2014/08/05/201143hmymxmizwmqi86yi.jpg",
+        "http://p1.image.hiapk.com/uploads/allimg/150413/7730-150413103526-51.jpg",
+        "http://s9.knowsky.com/bizhi/l/55001-65000/2009529123133602476178.jpg"]
+        
+        cycleImagesView.imageDidStartDownload = { [unowned self] in
+            self.title = "downloading..."
+        }
+        
+        cycleImagesView.imageDidFinishDownload = { [unowned self] in
+            self.title = "finished downloading"
+        }
         
         cycleImagesView.imageDidSelectedClousure = { index in
             print(index)

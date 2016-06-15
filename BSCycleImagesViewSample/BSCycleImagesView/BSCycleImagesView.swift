@@ -8,13 +8,26 @@
 
 import UIKit
 import SwiftyTimer
-import AFNetworking
+import AlamofireImage
 
 private struct Constants {
     static let CollectionReuseCellIdentifier = "BSCycleImagesCollectionCell"
 }
 
 public class BSCycleImagesView: UIView {
+    
+    public typealias ImageClosure = (index: Int) -> Void
+    public typealias Closure = () -> Void
+    
+    public var imageDidSelectedClousure: ImageClosure?
+    public var imageDidStartDownload: Closure? {
+        didSet {
+            if isDownloading {
+                imageDidStartDownload?()
+            }
+        }
+    }
+    public var imageDidFinishDownload: Closure?
     
     //set images, images == 1 cannot cycle play
     public var images: [UIImage] = [] {
@@ -36,14 +49,13 @@ public class BSCycleImagesView: UIView {
                 collectionView.contentOffset = CGPoint(x: collectionView.bounds.size.width, y: 0)
             }
             
-            switchTimer()
+            restartTimer()
         }
     }
     
     public var imageURLs: [String] = [] {
         didSet {
             startDownloadImages()
-
         }
     }
     
@@ -56,9 +68,8 @@ public class BSCycleImagesView: UIView {
         }
     }
     
-    public typealias ImageClosure = (index: Int) -> Void
-    
-    public var imageDidSelectedClousure: ImageClosure?
+    private var imageDownloader = ImageDownloader()
+    private var isDownloading = false
     
     private var timer: NSTimer!
     
@@ -128,38 +139,37 @@ extension BSCycleImagesView {
             return
         }
         
-        let imageDownloader = AFImageDownloader.defaultInstance()
-        var URLAndImage: [String : UIImage] = [:]
+        isDownloading = true
+        imageDidStartDownload?()
         
-        
-        for imageURL in imageURLs {
-            imageDownloader.downloadImageForURLRequest(NSURLRequest(URL: NSURL(string: imageURL)!), success: { [unowned self] (request: NSURLRequest, response: NSHTTPURLResponse?, image: UIImage) in
+        var URLStringAndImage: [String : UIImage] = [:]
+        imageURLs.forEach {
+            let request = NSURLRequest(URL: NSURL(string: $0)!)
+            imageDownloader.downloadImage(URLRequest: request) { [weak self] (response) in
                 
-                if response?.statusCode == 200 {
-                    
-                    let urlString = request.URL!.absoluteString
-                    URLAndImage[urlString] = image
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.isDownloading = false
+                
+                if case .Success(let image) = response.result {
+                    let URLString = response.response!.URL!.absoluteString
+                    URLStringAndImage[URLString] = image
+                } else if case .Failure(let error) = response.result {
+                    print(error)
                 }
                 
-                //all download complete
-                if URLAndImage.count == self.imageURLs.count {
-                    self.orderImages(URLAndImage)
+                if URLStringAndImage.count == strongSelf.imageURLs.count {
+                    strongSelf.imageDidFinishDownload?()
+                    strongSelf.images = strongSelf.imageURLs.map({ (URLString: String) -> UIImage in
+                        URLStringAndImage[URLString]!
+                    })
                 }
-                
-                }, failure: nil)!
-            
+            }
         }
     }
     
-    func orderImages(URLAndImage: [String : UIImage]) {
-        var images: [UIImage] = []
-        for imageURL in imageURLs {
-            images.append(URLAndImage[imageURL]!)
-        }
-        self.images = images
-    }
-    
-    func switchTimer() {
+    func restartTimer() {
         guard images.count > 1 else {
             return
         }
@@ -167,19 +177,23 @@ extension BSCycleImagesView {
         timer?.invalidate()
         
         if timeInterval != 0 {
-            startNewTimer()
+            startTimer()
         }
     }
 
-    func startNewTimer() {
+    func startTimer() {
         
-        timer = NSTimer.new(every: self.timeInterval, {
+        timer = NSTimer.new(every: self.timeInterval, { [weak self] in
             
-            let offsetX = self.collectionView.contentOffset.x
-            let width = self.collectionView.bounds.size.width
+            guard let strongSelf = self else {
+                return
+            }
+            
+            let offsetX = strongSelf.collectionView.contentOffset.x
+            let width = strongSelf.collectionView.bounds.size.width
             let index = offsetX/width
             
-            self.collectionView.setContentOffset(CGPoint(x: self.collectionView.bounds.width * CGFloat(index + 1), y: 0), animated: true)
+            strongSelf.collectionView.setContentOffset(CGPoint(x: strongSelf.collectionView.bounds.width * CGFloat(index + 1), y: 0), animated: true)
         })
         timer?.start(modes: NSRunLoopCommonModes)
     }
@@ -229,7 +243,7 @@ extension BSCycleImagesView: UIScrollViewDelegate {
         adjustImagePosition()
         
         if timeInterval != 0 {
-            switchTimer()
+            restartTimer()
         }
     }
     

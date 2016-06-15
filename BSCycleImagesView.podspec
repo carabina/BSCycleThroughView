@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "BSCycleImagesView"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "cycle play images, commonly used in scroll ads, etc.."
 
   # This description is used to generate tags and improve search results.
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/blurryssky/BSCycleImagesView.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/blurryssky/BSCycleImagesView.git", :tag => "0.0.2" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -134,6 +134,6 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
  s.dependency 'SwiftyTimer', '~> 1.4.0'
- s.dependency 'AFNetworking', '~> 3.1.0'
+ s.dependency 'AlamofireImage', '~> 2.4.0'
 
 end
