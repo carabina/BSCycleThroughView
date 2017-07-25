@@ -1,16 +1,22 @@
-//
-//  ViewController.swift
-//  BSCycleThroughViewSample
-//
-//  Created by 张亚东 on 25/07/2017.
-//  Copyright © 2017 blurryssky. All rights reserved.
-//
+# BSCycleImagesView
 
-import UIKit
+## Overview
 
-class ViewController: UIViewController {
+![BSCycleImagesViewGIF.gif](https://github.com/blurryssky/BSCycleImagesView/blob/master/ScreenShots/BSCycleImagesViewGIF.gif)
 
-    @IBOutlet weak var cycleThroughView: BSCycleThroughView!
+## Installation
+
+> use_frameworks!
+
+> pod 'BSCycleThroughView'
+
+
+## Usage
+
+### Supple an array with models as datasource
+
+```swift
+@IBOutlet weak var cycleThroughView: BSCycleThroughView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -37,5 +43,4 @@ class ViewController: UIViewController {
         }
     }
 
-}
-
+```
