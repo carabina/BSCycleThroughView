@@ -2,7 +2,7 @@
 
 ## Overview
 
-![BSCycleImagesViewGIF.gif](https://github.com/blurryssky/BSCycleImagesView/blob/master/ScreenShots/BSCycleImagesViewGIF.gif)
+![BSCycleImagesViewGIF.gif](https://github.com/blurryssky/BSCycleThroughView/blob/master/Screenshots/BSCycleThroughViewGIF.gif)
 
 ## Installation
 
