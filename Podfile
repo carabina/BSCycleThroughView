@@ -6,5 +6,5 @@ target 'BSCycleThroughViewSample' do
   use_frameworks!
 
   # Pods for BSCycleThroughViewSample
-pod 'Kingfisher', '~> 3.10.3'
+pod 'Kingfisher', '3.10.3'
 end
